@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - وظيفتي</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard {
+            min-height: 100vh;
+            background: var(--light-gray);
+        }
+
+        .dashboard-header {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .applications-list {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .application-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .application-item:last-child {
+            border-bottom: none;
+        }
+
+        .application-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--medium-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <nav class="dashboard-nav">
+                <div class="logo">وظيفتي</div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">م</div>
+                    <span id="userName">مستخدم</span>
+                    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="dashboard-content">
+            <h1>مرحباً بك في لوحة التحكم</h1>
+            
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-number" id="applicationsCount">0</div>
+                    <div>طلبات التقديم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="savedJobs">0</div>
+                    <div>وظائف محفوظة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="profileViews">0</div>
+                    <div>مشاهدات الملف</div>
+                </div>
+            </div>
+
+            <div class="applications-list">
+                <h2>طلبات التقديم الأخيرة</h2>
+                <div id="applicationsList">
+                    <!-- سيتم عرض طلبات التقديم هنا -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // التحقق من تسجيل الدخول
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('userName').textContent = currentUser.fullName;
+            document.getElementById('userAvatar').textContent = currentUser.fullName.charAt(0);
+            loadDashboardData();
+        }
+
+        function loadDashboardData() {
+            // تحميل طلبات التقديم
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
+            const userApplications = applications.filter(app => app.userId === currentUser.id);
+            
+            document.getElementById('applicationsCount').textContent = userApplications.length;
+            document.getElementById('savedJobs').textContent = '0';
+            document.getElementById('profileViews').textContent = '0';
+
+            // عرض طلبات التقديم
+            const applicationsList = document.getElementById('applicationsList');
+            
+            if (userApplications.length === 0) {
+                applicationsList.innerHTML = `
+                    <div class="empty-state">
+                        <p>لم تقم بالتقدم لأي وظائف بعد</p>
+                        <a href="index.html" class="btn btn-primary">تصفح الوظائف</a>
+                    </div>
+                `;
+            } else {
+                applicationsList.innerHTML = userApplications.map(app => `
+                    <div class="application-item">
+                        <div>
+                            <strong>${app.jobTitle}</strong>
+                            <div>${app.company}</div>
+                            <small>${new Date(app.appliedAt).toLocaleDateString('ar-EG')}</small>
+                        </div>
+                        <div class="application-status status-pending">قيد المراجعة</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

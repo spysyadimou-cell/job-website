@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وظيفتي - منصة التوظيف الجزائرية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 🔝 الشريط العلوي -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">وظيفتي</div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#jobs">الوظائف</a></li>
+                <li><a href="#states">الولايات</a></li>
+                <li><a href="#companies">الشركات</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-login">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-register">إنشاء حساب</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 🏠 القسم الرئيسي -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ابحث عن وظيفتك في الجزائر</h1>
+            <p>المنصة الأولى للتوظيف في الولايات الشرقية</p>
+            
+            <div class="search-box">
+                <input type="text" id="mainSearch" placeholder="ابحث عن الوظائف...">
+                <button id="searchBtn">بحث</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🗺️ فلتر الولايات -->
+    <section class="states-filter" id="states">
+        <div class="container">
+            <h2 class="section-title">ابحث حسب الولاية</h2>
+            <div class="states-grid">
+                <button class="state-btn active" data-state="all">جميع الولايات</button>
+                <button class="state-btn" data-state="annaba">ولاية عنابة</button>
+                <button class="state-btn" data-state="el_taref">ولاية الطارف</button>
+                <button class="state-btn" data-state="guelma">ولاية قالمة</button>
+                <button class="state-btn" data-state="souk_ahras">ولاية سوق أهراس</button>
+                <button class="state-btn" data-state="tebessa">ولاية تبسة</button>
+                <button class="state-btn" data-state="constantine">ولاية قسنطينة</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 💼 قسم الوظائف -->
+    <section class="jobs-section" id="jobs">
+        <div class="container">
+            <h2 class="section-title">الوظائف المتاحة</h2>
+            
+            <!-- فلتر الوظائف -->
+            <div class="jobs-filter">
+                <select id="categoryFilter">
+                    <option value="">جميع التخصصات</option>
+                    <option value="تعليم">التعليم</option>
+                    <option value="صحة">الصحة</option>
+                    <option value="هندسة">الهندسة</option>
+                    <option value="تقنية">تقنية المعلومات</option>
+                    <option value="محاسبة">المحاسبة</option>
+                    <option value="إدارة">الإدارة</option>
+                    <option value="بناء">البناء</option>
+                    <option value="خدمات">الخدمات</option>
+                    <option value="بيع">المبيعات</option>
+                    <option value="نقل">النقل</option>
+                    <option value="زراعة">الزراعة</option>
+                    <option value="صناعة">الصناعة</option>
+                    <option value="فنادق">الفنادق والمطاعم</option>
+                </select>
+                
+                <select id="experienceFilter">
+                    <option value="">جميع المستويات</option>
+                    <option value="مبتدئ">مبتدئ</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="خبير">خبير</option>
+                </select>
+
+                <select id="jobTypeFilter">
+                    <option value="">نوع العمل</option>
+                    <option value="دوام كامل">دوام كامل</option>
+                    <option value="دوام جزئي">دوام جزئي</option>
+                    <option value="مؤقت">عمل مؤقت</option>
+                </select>
+            </div>
+
+            <!-- قائمة الوظائف -->
+            <div class="jobs-grid" id="jobsContainer">
+                <!-- الوظائف تُعرض هنا -->
+            </div>
+
+            <!-- تحميل المزيد -->
+            <div class="load-more-container">
+                <button class="btn btn-secondary" id="loadMoreBtn">تحميل المزيد من الوظائف</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📞 اتصل بنا -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">اتصل بنا</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>نحن هنا لمساعدتك</h3>
+                    <p>هل لديك استفسار أو تحتاج إلى مساعدة؟ تواصل معنا</p>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" placeholder="اسمك الكامل" required>
+                    <input type="email" placeholder="بريدك الإلكتروني" required>
+                    <input type="text" placeholder="الموضوع" required>
+                    <textarea placeholder="رسالتك..." rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔻 الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>وظيفتي</h3>
+                    <p>منصة التوظيف الشاملة لجميع أنواع الوظائف</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#jobs">الوظائف</a></li>
+                        <li><a href="#states">الولايات</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 وظيفتي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
